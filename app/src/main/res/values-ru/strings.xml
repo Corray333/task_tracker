@@ -3,4 +3,25 @@
     <string name="task_tracker_title">Планировщик задач</string>
     <string name="task_details_title">Детали задачи</string>
     <string name="back">Назад</string>
+
+    <!-- Auth Screens -->
+    <string name="login_tab">Вход</string>
+    <string name="register_tab">Регистрация</string>
+    <string name="username_label">Имя пользователя</string>
+    <string name="password_label">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="register_button">Зарегистрироваться</string>
+    <string name="show_password">Показать пароль</string>
+    <string name="hide_password">Скрыть пароль</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Настройки</string>
+    <string name="current_user">Текущий пользователь</string>
+    <string name="unknown_user">Неизвестно</string>
+    <string name="account_section">Аккаунт</string>
+    <string name="logout_button">Выйти</string>
+    <string name="logout_dialog_title">Выход</string>
+    <string name="logout_dialog_message">Вы уверены, что хотите выйти?</string>
+    <string name="logout_confirm">Выйти</string>
+    <string name="logout_cancel">Отмена</string>
 </resources>

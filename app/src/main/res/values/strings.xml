@@ -3,4 +3,25 @@
     <string name="task_tracker_title">Task Tracker</string>
     <string name="task_details_title">Task Details</string>
     <string name="back">Back</string>
+
+    <!-- Auth Screens -->
+    <string name="login_tab">Login</string>
+    <string name="register_tab">Register</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="current_user">Current User</string>
+    <string name="unknown_user">Unknown</string>
+    <string name="account_section">Account</string>
+    <string name="logout_button">Logout</string>
+    <string name="logout_dialog_title">Logout</string>
+    <string name="logout_dialog_message">Are you sure you want to logout?</string>
+    <string name="logout_confirm">Logout</string>
+    <string name="logout_cancel">Cancel</string>
 </resources>

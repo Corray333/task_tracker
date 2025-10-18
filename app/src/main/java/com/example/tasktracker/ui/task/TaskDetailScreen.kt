@@ -150,7 +150,8 @@ fun TaskDetailContent(task: Task) {
             title = "Priority",
             content = {
                 PriorityBadge(priority = task.priority)
-            }
+            },
+
         )
 
         // Tags Section
@@ -204,7 +205,7 @@ fun InfoSection(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface,
         )
     ) {
         Column(
@@ -217,7 +218,7 @@ fun InfoSection(
                 text = title,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurface
             )
             content()
         }
@@ -250,7 +251,7 @@ fun PriorityBadge(priority: Int) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Box(
             modifier = Modifier
