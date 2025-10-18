@@ -23,6 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.task.TaskActivity"
+            android:exported="false"
+            android:label="@string/task_details_title"
+            android:theme="@style/Theme.TaskTracker"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

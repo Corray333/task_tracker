@@ -47,7 +47,8 @@ import com.example.tasktracker.domain.model.Task
 @Composable
 fun TaskListScreen(
     modifier: Modifier = Modifier,
-    viewModel: TaskListViewModel = hiltViewModel()
+    viewModel: TaskListViewModel = hiltViewModel(),
+    onTaskClick: (Task) -> Unit
 ) {
     val tasks by viewModel.tasks.collectAsState()
 
@@ -57,20 +58,27 @@ fun TaskListScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(tasks) { task ->
-            TaskCard(task = task)
+            TaskCard(
+                task = task,
+                onClick = { onTaskClick(task) }
+            )
         }
     }
 }
 
 @Composable
-fun TaskCard(task: Task) {
+fun TaskCard(
+    task: Task,
+    onClick: () -> Unit
+) {
     val cardColor = parseColor(task.colorHex).copy(alpha = 0.15f)
     val iconBackgroundColor = parseColor(task.colorHex)
 
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = cardColor)
+        colors = CardDefaults.cardColors(containerColor = cardColor),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier
