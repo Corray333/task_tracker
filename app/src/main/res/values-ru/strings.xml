@@ -24,4 +24,27 @@
     <string name="logout_dialog_message">Вы уверены, что хотите выйти?</string>
     <string name="logout_confirm">Выйти</string>
     <string name="logout_cancel">Отмена</string>
+
+    <!-- Task Screen -->
+    <string name="add_task">Добавить задачу</string>
+    <string name="edit_task">Редактировать задачу</string>
+    <string name="new_task">Новая задача</string>
+    <string name="task_not_found">Задача не найдена</string>
+    <string name="task_title">Название</string>
+    <string name="task_description">Описание</string>
+    <string name="task_tags">Теги</string>
+    <string name="task_tags_placeholder">работа, срочно, личное</string>
+    <string name="task_priority">Приоритет</string>
+    <string name="priority_high">Высокий</string>
+    <string name="priority_medium">Средний</string>
+    <string name="priority_low">Низкий</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="description_label">Описание</string>
+    <string name="date_time_label">Дата и время</string>
+    <string name="priority_label">Приоритет</string>
+    <string name="tags_label">Теги</string>
+    <string name="icon_label">Иконка</string>
+    <string name="color_label">Цвет</string>
+    <string name="default_color">По умолчанию</string>
 </resources>

@@ -55,7 +55,8 @@ class TaskActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     TaskDetailScreen(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        onTaskSaved = { finish() }
                     )
                 }
             }

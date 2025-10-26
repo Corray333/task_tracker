@@ -16,12 +16,46 @@ class MockTaskRepository @Inject constructor() : TaskRepository {
 
     override fun getTasks(): Flow<List<Task>> = tasks
 
+    override fun getTasksByDate(startOfDay: Long, endOfDay: Long): Flow<List<Task>> {
+        return MutableStateFlow(_tasks.value.filter {
+            it.dateEpochMillis >= startOfDay && it.dateEpochMillis < endOfDay
+        })
+    }
+
+    override fun searchTasks(query: String): Flow<List<Task>> {
+        return MutableStateFlow(_tasks.value.filter {
+            it.title.contains(query, ignoreCase = true) ||
+                    (it.description?.contains(query, ignoreCase = true) == true)
+        })
+    }
+
+    override fun getTasksByTag(tag: String): Flow<List<Task>> {
+        return MutableStateFlow(_tasks.value.filter {
+            it.tags.any { taskTag -> taskTag.contains(tag, ignoreCase = true) }
+        })
+    }
+
+    override fun getTasksByDateAndSearch(
+        startOfDay: Long,
+        endOfDay: Long,
+        query: String
+    ): Flow<List<Task>> {
+        return MutableStateFlow(_tasks.value.filter {
+            it.dateEpochMillis >= startOfDay && it.dateEpochMillis < endOfDay &&
+                    (it.title.contains(query, ignoreCase = true) ||
+                            (it.description?.contains(query, ignoreCase = true) == true))
+        })
+    }
+
     override suspend fun getTaskById(id: Long): Task? {
         return _tasks.value.find { it.id == id }
     }
 
-    override suspend fun insertTask(task: Task) {
-        _tasks.value = _tasks.value + task
+    override suspend fun insertTask(task: Task): Long {
+        val newId = (_tasks.value.maxOfOrNull { it.id } ?: 0) + 1
+        val newTask = task.copy(id = newId)
+        _tasks.value = _tasks.value + newTask
+        return newId
     }
 
     override suspend fun updateTask(task: Task) {
@@ -30,6 +64,10 @@ class MockTaskRepository @Inject constructor() : TaskRepository {
 
     override suspend fun deleteTask(task: Task) {
         _tasks.value = _tasks.value.filter { it.id != task.id }
+    }
+
+    override suspend fun deleteTaskById(id: Long) {
+        _tasks.value = _tasks.value.filter { it.id != id }
     }
 
     private fun generateMockTasks(): List<Task> {

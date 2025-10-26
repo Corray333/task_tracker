@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.tasktracker.data.local.TaskTrackerDatabase
 import com.example.tasktracker.data.local.UserPreferencesManager
+import com.example.tasktracker.data.local.dao.TaskDao
 import com.example.tasktracker.data.local.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -38,5 +39,11 @@ object DatabaseModule {
     @Singleton
     fun provideUserDao(database: TaskTrackerDatabase): UserDao {
         return database.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTaskDao(database: TaskTrackerDatabase): TaskDao {
+        return database.taskDao()
     }
 }

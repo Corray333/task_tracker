@@ -51,17 +51,28 @@ fun TaskListScreen(
     onTaskClick: (Task) -> Unit
 ) {
     val tasks by viewModel.tasks.collectAsState()
+    val selectedDate by viewModel.selectedDate.collectAsState()
 
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    Column(
+        modifier = modifier.fillMaxSize()
     ) {
-        items(tasks) { task ->
-            TaskCard(
-                task = task,
-                onClick = { onTaskClick(task) }
-            )
+        WeekDateSelector(
+            selectedDate = selectedDate,
+            onDateSelected = viewModel::selectDate,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(tasks) { task ->
+                TaskCard(
+                    task = task,
+                    onClick = { onTaskClick(task) }
+                )
+            }
         }
     }
 }
