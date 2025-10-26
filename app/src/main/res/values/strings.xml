@@ -63,4 +63,17 @@
     <string name="icon_label">Icon</string>
     <string name="color_label">Color</string>
     <string name="default_color">Default</string>
+
+    <!-- Calendar -->
+    <string name="open_calendar">Open Calendar</string>
+    <string name="ok">OK</string>
+    <string name="previous_month">Previous Month</string>
+    <string name="next_month">Next Month</string>
+    <string name="mon">M</string>
+    <string name="tue">T</string>
+    <string name="wed">W</string>
+    <string name="thu">T</string>
+    <string name="fri">F</string>
+    <string name="sat">S</string>
+    <string name="sun">S</string>
 </resources>

@@ -61,6 +61,49 @@ fun WeekDateSelector(
         }
     }
 
+    // Scroll to week containing selected date when selectedDate changes
+    LaunchedEffect(selectedDate) {
+        val selectedCal = Calendar.getInstance().apply {
+            timeInMillis = selectedDate
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        // Calculate which week contains the selected date
+        val currentWeekDates = getWeekDates(currentWeekOffset)
+        val selectedInCurrentWeek = currentWeekDates.any {
+            isSameDay(it.timeInMillis, selectedDate)
+        }
+
+        if (!selectedInCurrentWeek) {
+            // Calculate week offset for selected date
+            val today = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+
+            val daysDiff = ((selectedCal.timeInMillis - today.timeInMillis) / (1000 * 60 * 60 * 24)).toInt()
+            val currentDayOfWeek = today.get(Calendar.DAY_OF_WEEK)
+            val daysFromMonday = when (currentDayOfWeek) {
+                Calendar.SUNDAY -> 6
+                else -> currentDayOfWeek - Calendar.MONDAY
+            }
+
+            val selectedDayOfWeek = selectedCal.get(Calendar.DAY_OF_WEEK)
+            val selectedDaysFromMonday = when (selectedDayOfWeek) {
+                Calendar.SUNDAY -> 6
+                else -> selectedDayOfWeek - Calendar.MONDAY
+            }
+
+            val weekOffset = (daysDiff + daysFromMonday - selectedDaysFromMonday) / 7
+            pagerState.scrollToPage(initialPage + weekOffset)
+        }
+    }
+
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }
             .distinctUntilChanged()

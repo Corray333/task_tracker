@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -19,12 +20,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tasktracker.ui.base.BaseLocaleActivity
 import com.example.tasktracker.ui.settings.SettingsActivity
 import com.example.tasktracker.ui.task.TaskActivity
+import com.example.tasktracker.ui.tasks.CalendarDialog
 import com.example.tasktracker.ui.tasks.TaskListScreen
 import com.example.tasktracker.ui.tasks.TaskListViewModel
 import com.example.tasktracker.ui.theme.TaskTrackerTheme
@@ -40,6 +45,7 @@ class MainActivity : BaseLocaleActivity() {
             ThemedContent {
                 val viewModel: TaskListViewModel = hiltViewModel()
                 val selectedDate by viewModel.selectedDate.collectAsState()
+                var showCalendar by remember { mutableStateOf(false) }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -47,6 +53,12 @@ class MainActivity : BaseLocaleActivity() {
                         TopAppBar(
                             title = { Text(stringResource(R.string.task_tracker_title)) },
                             actions = {
+                                IconButton(onClick = { showCalendar = true }) {
+                                    Icon(
+                                        imageVector = Icons.Default.CalendarToday,
+                                        contentDescription = stringResource(R.string.open_calendar)
+                                    )
+                                }
                                 IconButton(onClick = {
                                     val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                                     startActivity(intent)
@@ -88,6 +100,16 @@ class MainActivity : BaseLocaleActivity() {
                             startActivity(intent)
                         }
                     )
+
+                    if (showCalendar) {
+                        CalendarDialog(
+                            selectedDate = selectedDate,
+                            onDateSelected = { newDate ->
+                                viewModel.selectDate(newDate)
+                            },
+                            onDismiss = { showCalendar = false }
+                        )
+                    }
                 }
             }
         }
