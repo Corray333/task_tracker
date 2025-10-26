@@ -3,17 +3,17 @@ package com.example.tasktracker.ui.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.tasktracker.MainActivity
 import com.example.tasktracker.data.local.UserPreferencesManager
 import com.example.tasktracker.ui.auth.LoginActivity
+import com.example.tasktracker.ui.base.BaseLocaleActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashActivity : ComponentActivity() {
+class SplashActivity : BaseLocaleActivity() {
 
     @Inject
     lateinit var userPreferencesManager: UserPreferencesManager

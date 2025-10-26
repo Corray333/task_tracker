@@ -2,7 +2,6 @@ package com.example.tasktracker
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.tasktracker.ui.base.BaseLocaleActivity
 import com.example.tasktracker.ui.settings.SettingsActivity
 import com.example.tasktracker.ui.task.TaskActivity
 import com.example.tasktracker.ui.tasks.TaskListScreen
@@ -31,13 +31,13 @@ import com.example.tasktracker.ui.theme.TaskTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : BaseLocaleActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TaskTrackerTheme {
+            ThemedContent {
                 val viewModel: TaskListViewModel = hiltViewModel()
                 val selectedDate by viewModel.selectedDate.collectAsState()
 

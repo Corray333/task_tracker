@@ -2,20 +2,20 @@ package com.example.tasktracker.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.tasktracker.MainActivity
+import com.example.tasktracker.ui.base.BaseLocaleActivity
 import com.example.tasktracker.ui.theme.TaskTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : ComponentActivity() {
+class LoginActivity : BaseLocaleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TaskTrackerTheme {
+            ThemedContent {
                 AuthScreen(
                     onAuthSuccess = {
                         // Navigate to MainActivity after successful authentication

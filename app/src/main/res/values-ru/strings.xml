@@ -25,6 +25,22 @@
     <string name="logout_confirm">Выйти</string>
     <string name="logout_cancel">Отмена</string>
 
+    <!-- Language Settings -->
+    <string name="language_section">Язык</string>
+    <string name="language_label">Язык приложения</string>
+    <string name="language_system">Системный</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+    <string name="select_language">Выберите язык</string>
+
+    <!-- Theme Settings -->
+    <string name="theme_section">Внешний вид</string>
+    <string name="theme_label">Тема</string>
+    <string name="theme_system">Системная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="select_theme">Выберите тему</string>
+
     <!-- Task Screen -->
     <string name="add_task">Добавить задачу</string>
     <string name="edit_task">Редактировать задачу</string>

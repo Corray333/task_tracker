@@ -344,7 +344,7 @@ fun ColorSelector(
                         .clip(CircleShape)
                         .background(
                             if (selectedColor == colorHex)
-                                Color.White.copy(alpha = 0.3f)
+                                MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
                             else
                                 Color.Transparent
                         )

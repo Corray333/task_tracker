@@ -1,7 +1,6 @@
 package com.example.tasktracker.ui.task
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,13 +16,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.ViewModelProvider
 import com.example.tasktracker.R
+import com.example.tasktracker.ui.base.BaseLocaleActivity
 import com.example.tasktracker.ui.theme.TaskTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TaskActivity : ComponentActivity() {
+class TaskActivity : BaseLocaleActivity() {
 
     companion object {
         const val EXTRA_TASK_ID = "extra_task_id"
@@ -36,7 +35,7 @@ class TaskActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            TaskTrackerTheme {
+            ThemedContent {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
