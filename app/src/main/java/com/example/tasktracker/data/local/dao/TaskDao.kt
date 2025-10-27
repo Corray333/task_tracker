@@ -10,44 +10,49 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM tasks ORDER BY dateEpochMillis DESC, priority DESC")
-    fun getAllTasks(): Flow<List<TaskEntity>>
+    @Query("SELECT * FROM tasks WHERE userId = :userId ORDER BY dateEpochMillis DESC, priority DESC")
+    fun getAllTasks(userId: Long): Flow<List<TaskEntity>>
 
-    @Query("SELECT * FROM tasks WHERE id = :taskId")
-    suspend fun getTaskById(taskId: Long): TaskEntity?
+    @Query("SELECT * FROM tasks WHERE id = :taskId AND userId = :userId")
+    suspend fun getTaskById(taskId: Long, userId: Long): TaskEntity?
 
     @Query("""
         SELECT * FROM tasks
-        WHERE dateEpochMillis >= :startOfDay
+        WHERE userId = :userId
+        AND dateEpochMillis >= :startOfDay
         AND dateEpochMillis < :endOfDay
         ORDER BY priority DESC, dateEpochMillis ASC
     """)
-    fun getTasksByDate(startOfDay: Long, endOfDay: Long): Flow<List<TaskEntity>>
+    fun getTasksByDate(userId: Long, startOfDay: Long, endOfDay: Long): Flow<List<TaskEntity>>
 
     @Query("""
         SELECT * FROM tasks
-        WHERE (title LIKE '%' || :searchQuery || '%'
+        WHERE userId = :userId
+        AND (title LIKE '%' || :searchQuery || '%'
         OR description LIKE '%' || :searchQuery || '%')
         ORDER BY dateEpochMillis DESC, priority DESC
     """)
-    fun searchTasks(searchQuery: String): Flow<List<TaskEntity>>
+    fun searchTasks(userId: Long, searchQuery: String): Flow<List<TaskEntity>>
 
     @Query("""
         SELECT * FROM tasks
-        WHERE tags LIKE '%' || :tag || '%'
+        WHERE userId = :userId
+        AND tags LIKE '%' || :tag || '%'
         ORDER BY dateEpochMillis DESC, priority DESC
     """)
-    fun getTasksByTag(tag: String): Flow<List<TaskEntity>>
+    fun getTasksByTag(userId: Long, tag: String): Flow<List<TaskEntity>>
 
     @Query("""
         SELECT * FROM tasks
-        WHERE dateEpochMillis >= :startOfDay
+        WHERE userId = :userId
+        AND dateEpochMillis >= :startOfDay
         AND dateEpochMillis < :endOfDay
         AND (title LIKE '%' || :searchQuery || '%'
         OR description LIKE '%' || :searchQuery || '%')
         ORDER BY priority DESC, dateEpochMillis ASC
     """)
     fun getTasksByDateAndSearch(
+        userId: Long,
         startOfDay: Long,
         endOfDay: Long,
         searchQuery: String

@@ -3,7 +3,6 @@ package com.example.tasktracker.di
 import android.content.Context
 import androidx.room.Room
 import com.example.tasktracker.data.local.TaskTrackerDatabase
-import com.example.tasktracker.data.local.UserPreferencesManager
 import com.example.tasktracker.data.local.dao.TaskDao
 import com.example.tasktracker.data.local.dao.UserDao
 import dagger.Module
@@ -20,16 +19,12 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideTaskTrackerDatabase(
-        @ApplicationContext context: Context,
-        userPreferencesManager: UserPreferencesManager
+        @ApplicationContext context: Context
     ): TaskTrackerDatabase {
-        val userId = userPreferencesManager.userId
-        val dbName = TaskTrackerDatabase.getDatabaseName(userId)
-
         return Room.databaseBuilder(
             context,
             TaskTrackerDatabase::class.java,
-            dbName
+            TaskTrackerDatabase.DATABASE_NAME
         )
             .fallbackToDestructiveMigration()
             .build()

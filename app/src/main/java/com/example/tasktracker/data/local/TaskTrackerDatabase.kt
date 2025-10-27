@@ -10,7 +10,7 @@ import com.example.tasktracker.data.local.entity.UserEntity
 
 @Database(
     entities = [UserEntity::class, TaskEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -20,13 +20,5 @@ abstract class TaskTrackerDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "task_tracker_db"
-
-        fun getDatabaseName(userId: Long?): String {
-            return if (userId != null) {
-                "${DATABASE_NAME}_user_$userId"
-            } else {
-                DATABASE_NAME
-            }
-        }
     }
 }
