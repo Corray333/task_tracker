@@ -63,6 +63,10 @@
     <string name="icon_label">Icon</string>
     <string name="color_label">Color</string>
     <string name="default_color">Default</string>
+    <string name="select_icon">Select Icon</string>
+    <string name="select_color">Select Color</string>
+    <string name="select">Select</string>
+    <string name="hue">Hue</string>
 
     <!-- Calendar -->
     <string name="open_calendar">Open Calendar</string>

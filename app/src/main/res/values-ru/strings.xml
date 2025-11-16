@@ -63,6 +63,10 @@
     <string name="icon_label">Иконка</string>
     <string name="color_label">Цвет</string>
     <string name="default_color">По умолчанию</string>
+    <string name="select_icon">Выберите иконку</string>
+    <string name="select_color">Выберите цвет</string>
+    <string name="select">Выбрать</string>
+    <string name="hue">Оттенок</string>
 
     <!-- Calendar -->
     <string name="open_calendar">Открыть календарь</string>

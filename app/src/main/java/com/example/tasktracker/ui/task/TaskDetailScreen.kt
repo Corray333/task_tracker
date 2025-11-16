@@ -1,12 +1,11 @@
 package com.example.tasktracker.ui.task
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,15 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.MedicalServices
-import androidx.compose.material.icons.filled.MenuBook
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -36,15 +28,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tasktracker.R
+import com.example.tasktracker.ui.components.ColorPickerDialog
+import com.example.tasktracker.ui.components.IconPickerDialog
+import com.example.tasktracker.ui.components.getIconPainter
 import com.example.tasktracker.ui.tasks.parseColor
 
 @Composable
@@ -143,13 +140,13 @@ fun TaskEditContent(
         )
 
         // Icon selector
-        IconSelector(
+        IconSelectorButton(
             selectedIcon = uiState.icon,
             onIconSelected = onIconChange
         )
 
         // Color selector
-        ColorSelector(
+        ColorSelectorButton(
             selectedColor = uiState.colorHex,
             onColorSelected = onColorChange
         )
@@ -231,21 +228,12 @@ fun PriorityButton(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun IconSelector(
+fun IconSelectorButton(
     selectedIcon: String,
     onIconSelected: (String) -> Unit
 ) {
-    val icons = listOf(
-        "Task" to Icons.Filled.Task,
-        "PhoneAndroid" to Icons.Filled.PhoneAndroid,
-        "ShoppingCart" to Icons.Filled.ShoppingCart,
-        "FitnessCenter" to Icons.Filled.FitnessCenter,
-        "MenuBook" to Icons.Filled.MenuBook,
-        "MedicalServices" to Icons.Filled.MedicalServices,
-        "BarChart" to Icons.Filled.BarChart
-    )
+    var showDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -256,63 +244,54 @@ fun IconSelector(
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold
         )
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .clickable { showDialog = true }
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            icons.forEach { (iconName, icon) ->
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(
-                            if (selectedIcon == iconName)
-                                MaterialTheme.colorScheme.primaryContainer
-                            else
-                                MaterialTheme.colorScheme.surfaceVariant
-                        )
-                        .clickable { onIconSelected(iconName) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = iconName,
-                        tint = if (selectedIcon == iconName)
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        else
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = getIconPainter(selectedIcon),
+                    contentDescription = selectedIcon,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.size(24.dp)
+                )
             }
+
+            Text(
+                text = stringResource(R.string.select_icon),
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
+    }
+
+    if (showDialog) {
+        IconPickerDialog(
+            selectedIcon = selectedIcon,
+            onIconSelected = onIconSelected,
+            onDismiss = { showDialog = false }
+        )
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ColorSelector(
+fun ColorSelectorButton(
     selectedColor: String,
     onColorSelected: (String) -> Unit
 ) {
-    val colors = listOf(
-        "#F44336" to "Red",
-        "#E91E63" to "Pink",
-        "#9C27B0" to "Purple",
-        "#673AB7" to "Deep Purple",
-        "#3F51B5" to "Indigo",
-        "#2196F3" to "Blue",
-        "#03A9F4" to "Light Blue",
-        "#00BCD4" to "Cyan",
-        "#009688" to "Teal",
-        "#4CAF50" to "Green",
-        "#8BC34A" to "Light Green",
-        "#CDDC39" to "Lime",
-        "#FFEB3B" to "Yellow",
-        "#FFC107" to "Amber",
-        "#FF9800" to "Orange",
-        "#FF5722" to "Deep Orange"
-    )
+    var showDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -323,35 +302,44 @@ fun ColorSelector(
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold
         )
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .clickable { showDialog = true }
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            colors.forEach { (colorHex, colorName) ->
-                Box(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(parseColor(colorHex))
-                        .then(
-                            if (selectedColor == colorHex) {
-                                Modifier.padding(4.dp)
-                            } else {
-                                Modifier
-                            }
-                        )
-                        .clip(CircleShape)
-                        .background(
-                            if (selectedColor == colorHex)
-                                MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
-                            else
-                                Color.Transparent
-                        )
-                        .clickable { onColorSelected(colorHex) }
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .background(parseColor(selectedColor), CircleShape)
+                    .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape)
+            )
+
+            Column {
+                Text(
+                    text = stringResource(R.string.select_color),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = selectedColor,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
+    }
+
+    if (showDialog) {
+        ColorPickerDialog(
+            initialColor = selectedColor,
+            onColorSelected = onColorSelected,
+            onDismiss = { showDialog = false }
+        )
     }
 }
 

@@ -20,7 +20,7 @@ data class TaskUiState(
     val description: String = "",
     val tags: String = "",
     val priority: Int = 1,
-    val icon: String = "Task",
+    val icon: String = "work",
     val colorHex: String = "#9C27B0",
     val taskSaved: Boolean = false
 )
@@ -54,7 +54,7 @@ class TaskViewModel @Inject constructor(
                         description = "",
                         tags = "",
                         priority = 1,
-                        icon = "Task",
+                        icon = "work",
                         colorHex = "#9C27B0"
                     )
                 }
@@ -68,7 +68,7 @@ class TaskViewModel @Inject constructor(
                         description = task?.description ?: "",
                         tags = task?.tags?.joinToString(", ") ?: "",
                         priority = task?.priority ?: 1,
-                        icon = task?.icon ?: "Task",
+                        icon = task?.icon ?: "work",
                         colorHex = task?.colorHex ?: "#9C27B0"
                     )
                 }
@@ -122,7 +122,7 @@ class TaskViewModel @Inject constructor(
                 description = currentState.description.ifBlank { null },
                 tags = tagsList,
                 dateEpochMillis = selectedDate,
-                icon = currentState.icon.ifBlank { "Task" },
+                icon = currentState.icon.ifBlank { "work" },
                 colorHex = currentState.colorHex.ifBlank { "#9C27B0" },
                 priority = currentState.priority
             )

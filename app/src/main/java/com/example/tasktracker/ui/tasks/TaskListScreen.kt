@@ -17,14 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.FitnessCenter
-import androidx.compose.material.icons.filled.MedicalServices
-import androidx.compose.material.icons.filled.MenuBook
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -37,12 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.tasktracker.domain.model.Task
+import com.example.tasktracker.ui.components.getIconPainter
 
 @Composable
 fun TaskListScreen(
@@ -106,7 +98,7 @@ fun TaskCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = getIconForName(task.icon),
+                    painter = getIconPainter(task.icon),
                     contentDescription = task.title,
                     tint = Color.White,
                     modifier = Modifier.size(28.dp)
@@ -166,17 +158,5 @@ fun parseColor(colorHex: String?): Color {
         } ?: Color.Gray
     } catch (_: Exception) {
         Color.Gray
-    }
-}
-
-fun getIconForName(iconName: String?): ImageVector {
-    return when (iconName) {
-        "PhoneAndroid" -> Icons.Filled.PhoneAndroid
-        "ShoppingCart" -> Icons.Filled.ShoppingCart
-        "FitnessCenter" -> Icons.Filled.FitnessCenter
-        "MenuBook" -> Icons.Filled.MenuBook
-        "MedicalServices" -> Icons.Filled.MedicalServices
-        "BarChart" -> Icons.Filled.BarChart
-        else -> Icons.Filled.Task
     }
 }
